@@ -1,3 +1,9 @@
 $( document ).ready(function() {
-    console.log( "ready!" );
+  $( "#target" ).keydown(function(event) {
+    if( event.which == 13 ) {
+      event.preventDefault();
+      var user_input = $('#target').val();
+      $('ul').append('<li>' + user_input + '</li>');
+    }
+  });  
 });
