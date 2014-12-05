@@ -1,12 +1,12 @@
 $( document ).ready(function() {
   $( "#target" ).keydown(function(event) {
     if( event.which == 13 ) {
-      event.preventDefault();
+      var checkbox = $('<li><input type="checkbox"></input></li>');
+      $('ul').append(checkbox);
       var user_input = $('#target').val();
-      var checkbox = $('<input type="checkbox">');
-      $('ul').append('<li>' + user_input + '</li>');
-      var checkbox = $('<input type="checkbox">');
-      $('li').append(checkbox);
+      $(checkbox).append(user_input);
+      // var checkbox = $('<input type="checkbox">');
+      // $('li').append(checkbox);
       // resets to placeholder
       $('input').val('').removeAttr('checked').removeAttr('selected');
     }
@@ -14,7 +14,7 @@ $( document ).ready(function() {
     $('input:checkbox').change(
       function() {
         if(this.checked) {
-          console.log("meow");
+          $('li').wrap('<strike>');
         }
       })
   });  
