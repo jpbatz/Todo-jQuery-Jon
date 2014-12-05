@@ -12,10 +12,12 @@ $( document ).ready(function() {
     $('input:checkbox').change(
       function() {
         if(this.checked) {
-          $(this).siblings().wrap('<strike>');
+          // add class
+          // link to styles.css is best practice
+          $(this).siblings().css('text-decoration', 'line-through');
         } else {
-          console.log("uncheck");
-          $('span').unwrap();
+          // remove class
+          $(this).siblings().css('text-decoration', 'none');
         }
       });
   });  
