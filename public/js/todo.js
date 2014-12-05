@@ -20,5 +20,6 @@ $( document ).ready(function() {
           $(this).siblings().css('text-decoration', 'none');
         }
       });
+    // TODO LIST COUNTER
   });  
 });
