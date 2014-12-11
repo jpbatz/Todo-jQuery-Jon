@@ -1,4 +1,4 @@
-$( document ).ready(function() {
+$(function() {
   $( "#target" ).keydown(function(event) {
     if( event.which == 13 ) {
       var checkbox = $('<li><input type="checkbox"></input></li>');
@@ -12,14 +12,11 @@ $( document ).ready(function() {
     $('input:checkbox').change(
       function() {
         if(this.checked) {
-          // add class
-          // link to styles.css is best practice
           $(this).siblings().css('text-decoration', 'line-through');
         } else {
-          // remove class
+          console.log("uncheck");
           $(this).siblings().css('text-decoration', 'none');
         }
       });
-    // TODO LIST COUNTER
   });  
 });
