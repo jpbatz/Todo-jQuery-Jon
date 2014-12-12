@@ -3,10 +3,11 @@ var express = require('express');
 var app = express();
 
 app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.post('/save', function (req, res) {
-  console.log('hamster');
+  console.log( req.body );
   res.send('{"status":"success"}');
 });
 
