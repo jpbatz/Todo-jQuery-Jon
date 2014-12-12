@@ -21,4 +21,8 @@ $(function() {
   });
 
   // save
+  $('button#save').click(function() {
+    console.log('save button clicked');
+    $.post('/save');
+  });
 });
