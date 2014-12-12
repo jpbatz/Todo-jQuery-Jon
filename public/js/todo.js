@@ -1,11 +1,25 @@
 $(function() {
+  // autoload the saved file
+  $.get('/todo_save.txt', function(data) {
+    var list_items = jQuery.parseJSON(data);
+    for(var i =0; i<list_items.length; i++) {
+      var checked= '';
+      if(list_items[i].completed) {
+        checked = 'checked="checked"';
+      } 
+      var checkbox = $('<li><input type="checkbox" ' + checked + '></input></li>');
+      $('ul').append(checkbox);
+      checkbox.append('<span>' + list_items[i].title + '</span>');
+    };
+  });
+
   $( "#target" ).keydown(function(event) {
     if( event.which == 13 ) {
       var checkbox = $('<li><input type="checkbox"></input></li>');
       $('ul').append(checkbox);
       checkbox.addClass('list_items');
       var user_input = $('#target').val();
-      $(checkbox).append('<span>' + user_input + '</span>');
+      checkbox.append('<span>' + user_input + '</span>');
       // RESESTS TO PLACEHOLDER
       $('input').val('').removeAttr('checked').removeAttr('selected');
     }

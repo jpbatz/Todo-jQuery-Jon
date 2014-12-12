@@ -22,11 +22,11 @@ var server = app.listen(3000, function () {
 });
 
 function saveTodoList(content) {
-  fs.writeFile('./public/todo_save.json', content, function (err) {
+  fs.writeFile('./public/todo_save.txt', content, function (err) {
     if(err) {
       console.log('error');
     } else {
-      console.log('successfully saved todo_save.json');
+      console.log('successfully saved todo_save.txt');
     }
   });
 }
