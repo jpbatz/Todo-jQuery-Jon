@@ -18,6 +18,7 @@
   "homepage": "https://github.com/fobabett/Todo-jQuery",
   "dependencies": {
     "body-parser": "^1.10.0",
-    "express": "^4.10.5"
+    "express": "^4.10.5",
+    "mongodb": "^1.4.23"
   }
 }
