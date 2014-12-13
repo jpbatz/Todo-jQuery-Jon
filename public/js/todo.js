@@ -6,8 +6,8 @@ $(function() {
       var checked= '';
       if(list_items[i].completed) {
         checked = 'checked="checked"';
-      } 
-      var checkbox = $('<li><input type="checkbox" ' + checked + '></input></li>');
+      }
+      var checkbox = $('<li class="list_items"><input type="checkbox" ' + checked + '></input></li>');
       $('ul').append(checkbox);
       checkbox.append('<span>' + list_items[i].title + '</span>');
     };
@@ -21,18 +21,18 @@ $(function() {
       var user_input = $('#target').val();
       checkbox.append('<span>' + user_input + '</span>');
       // RESESTS TO PLACEHOLDER
-      $('input').val('').removeAttr('checked').removeAttr('selected');
+      $('input').val('');
     }
-    // CROSS OUT LIST ITEM IF BOX CHECKED
-    $('input:checkbox').change(
-      function() {
-        if(this.checked) {
-          $(this).siblings().css('text-decoration', 'line-through');
-        } else {
-          console.log("uncheck");
-          $(this).siblings().css('text-decoration', 'none');
-        }
-      });
+  });
+
+  // CROSS OUT LIST ITEM IF BOX CHECKED
+  $('ul').on('change', 'input[type=checkbox]', function() {
+    if(this.checked) {
+      $(this).siblings().css('text-decoration', 'line-through');
+    } else {
+      console.log("uncheck");
+      $(this).siblings().css('text-decoration', 'none');
+    }
   });
 
   // save
