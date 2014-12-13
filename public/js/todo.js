@@ -36,18 +36,18 @@ $(function() {
   });
 
   // save
-  $('button#save').click(function() {
-    console.log('save button clicked');
-    var list_items_array = [];
-    $('.list_items').each(function (i, obj) {
-      var list_item = {
-        'index': i,
-        'title': $(obj).text(),
-        'completed': $(obj).find('input:checked').length > 0
-      };
-      list_items_array.push(list_item);
-    });
-    var the_list_to_save = {'list': JSON.stringify(list_items_array)}
-    $.post('/save', the_list_to_save);
-  });
+  // $('button#save').click(function() {
+  //   console.log('save button clicked');
+  //   var list_items_array = [];
+  //   $('.list_items').each(function (i, obj) {
+  //     var list_item = {
+  //       'index': i,
+  //       'title': $(obj).text(),
+  //       'completed': $(obj).find('input:checked').length > 0
+  //     };
+  //     list_items_array.push(list_item);
+  //   });
+  //   var the_list_to_save = {'list': JSON.stringify(list_items_array)}
+  //   $.post('/item', the_list_to_save);
+  // });
 });
