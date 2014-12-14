@@ -1,7 +1,7 @@
 $(function() {
   // autoload the saved file
-  $.get('/todo_save.txt', function(data) {
-    var list_items = jQuery.parseJSON(data);
+  $.get('/todo_save.json', function(data) {
+    var list_items = data;
     for(var i =0; i<list_items.length; i++) {
       var checked= '';
       if(list_items[i].completed) {
@@ -20,9 +20,20 @@ $(function() {
       checkbox.addClass('list_items');
       var user_input = $('#target').val();
       checkbox.append('<span>' + user_input + '</span>');
-      // RESESTS TO PLACEHOLDER
+      // RESETS TO PLACEHOLDER
       $('input').val('');
-    }
+
+      var post_data = {
+        new_item : {
+          title : user_input,
+          checked : false
+        }
+      }
+
+      $.post('/item', post_data, function(data){ });  
+
+        // if data is not err
+      }
   });
 
   // CROSS OUT LIST ITEM IF BOX CHECKED
