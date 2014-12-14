@@ -1,3 +1,4 @@
+@import url(http://fonts.googleapis.com/css?family=Just+Another+Hand);
 /**
  * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
  * http://cssreset.com
@@ -46,3 +47,19 @@ table {
   border-spacing: 0;
 }
 /*END RESET*/
+
+body {
+  background-image: url('/images/Whiteboard_background.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+h1 {
+  font-size: 50px;
+  text-align: center;
+  color: #7500FF;
+}
+
+#list_container {
+  text-align: center;
+}

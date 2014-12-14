@@ -1,15 +1,30 @@
 $(function() {
   // autoload the saved file
-  $.get('/todo_save.json', function(data) {
-    var list_items = data;
+  $.get('/items', function( list_items ) {
     for(var i =0; i<list_items.length; i++) {
-      var checked= '';
+      
+      var list_label = $('<span>', {
+        text : list_items[i].title
+      });
+
+      var list_item = $('<li>',{
+        class : "list_items"
+      });
+
+      var list_checkbox = $('<input>', {
+        type : "checkbox"
+      });
+
       if(list_items[i].completed) {
-        checked = 'checked="checked"';
+        list_checkbox.attr("checked","checked");
       }
-      var checkbox = $('<li class="list_items"><input type="checkbox" ' + checked + '></input></li>');
-      $('ul').append(checkbox);
-      checkbox.append('<span>' + list_items[i].title + '</span>');
+
+      list_item
+        .append( list_checkbox )
+        .append( list_label );
+      
+      $('ul').append( list_item );
+      
     };
   });
 
