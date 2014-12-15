@@ -8,9 +8,9 @@ $(function() {
     
     docs.forEach(function (doc) {
       
-      $('ul#todo_list').append( buildTodoItem( doc ) )
+      $('ul#todo_list').append( buildTodoItem( doc ) );
 
-    })
+    });
 
   });
 
@@ -88,7 +88,7 @@ $(function() {
         title : user_input,
         checked : false
       }
-    }
+    };
 
     $.post('/items', post_data, function (new_todo_id){
       
