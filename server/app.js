@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // provides arguments database "db", from .connect and 
 // and "collection" of the specified "db"
 function connect_to_db (cb) {
-  // establishes a connection to the MongoDB and returns any error message
+  // establishes a connection to the MongoDB and provides any error message "err"
   // and the database object "db" ("todosdb")
   MongoClient.connect(CONNECTION_STRING, function(err, db) {
     if(err) {
@@ -64,7 +64,7 @@ app.get('/items',function (req, res) {
     collection.find({}).toArray(function (err, docs) {
       // close the database connection, to prevent runaway resource
       db.close();
-      // send query result to, and close comms with todo.js
+      // send db query result to, and close comms with todo.js, via res response argument object
       res.send(docs);
     });
   });
@@ -76,8 +76,8 @@ app.get('/items',function (req, res) {
   POST /items
  */
 
-// expressjs: listens for POST request via todos.js on route /items
-// and saves list items to the database
+// expressjs: listens for POST request from todos.js on route /items
+// then saves new list item specified in req request argument object to the database
 app.post('/items',function (req, res) {
   
   connect_to_db( function ( db, collection ) {
@@ -85,10 +85,10 @@ app.post('/items',function (req, res) {
     // 
     var new_todo_item_to_be_inserted = req.body.new_item;
 
-    // 
+    // insert new item into database
     collection.insert( new_todo_item_to_be_inserted, function (err, docs) {
       db.close();
-      // respond to todos.js with the doc id's
+      // confirmation response sent to todos.js with the doc id's
       res.send( docs[0]._id );
     });
   });
@@ -99,22 +99,28 @@ app.post('/items',function (req, res) {
   UPDATE completed status
   PUT /items/:id/:status
  */
+
+// expressjs: listens for PUT request from todo.js on route /items/:id/:status
+// then updates status for item in database with specified id, per req request argument
 app.put('/items/:id/:status',function (req, res) {
   
   connect_to_db( function ( db, collection ) {
+    // extract the id from the request paramaeter argument
     var todo_id = req.params.id;
+    // extract the status from the request paramaeter argument
     var todo_completed_status = req.params.status;
 
     // collection.update(criteria, objNew, options, [callback]);
     collection.update(
-      { '_id' : new ObjectID(todo_id) },    // criteria
+      // in MongoDB speak, create update object item
+      { '_id' : new ObjectID(todo_id) },    // criteria, ??? but need to properly format to _id to find doc in db ???
       {
         $set: {
-          completed : todo_completed_status
+          completed : todo_completed_status // ??? $set modifies, does not overwrite ???
         }
       },                                    // objNew
-      {w:1},                                // options
-      function(err) {                       // callback
+      {w:1},                                // options, ??? huh? ???
+      function(err) {                       // callback, reports operation status
         var success;
         if (err){
           success = false;
@@ -125,6 +131,7 @@ app.put('/items/:id/:status',function (req, res) {
         }
 
         db.close();
+        // send response to todos.js
         res.json( { success : success } );
       }
     );
@@ -136,24 +143,32 @@ app.put('/items/:id/:status',function (req, res) {
   DESTROY
   DELETE /items/:id
  */
+
+ // expressjs: listen for DELETE request from todo.js on route /items/:id
+ // then removed the item specified in the req request argument from the database
 app.delete('/items/:id',function (req, res) {
   connect_to_db( function ( db, collection ) {
+    // retrieve the id parameter from the req request argument object
     var _id = req.params.id;
+    // removed the item with specified id (converted to _id)
     collection.remove({"_id": new ObjectID( _id )}, function (err, result) {
       if( err ) throw err;
       
       db.close();
+      // ??? do we need to do something with result? ???
+      // respond to todo.js with status via res response argument object
       res.json({ success : "success" });
     });
   });
 });
 
 
-
+// expressjs: assign port 3000 to listen for requests from web page and todo.js
+// assumes host address is self?
 var server = app.listen(3000, function () {
 
   var host = server.address().address;
   var port = server.address().port;
-
+  // see command line where nodemon was initiated for stdout messages
   console.log('Example app listening at http://%s:%s', host, port);
 });
